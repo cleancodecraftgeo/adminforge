@@ -6,6 +6,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -32,6 +33,11 @@ class ProductsTable
                 TextColumn::make('sku')
                     ->label('SKU')
                     ->searchable(),
+                ImageColumn::make('featuredImage.path')
+                    ->disk('public')
+                    ->square()
+                    ->size(60)
+                    ->label('Image'),
                 IconColumn::make('is_active')
                     ->boolean(),
                 IconColumn::make('is_featured')

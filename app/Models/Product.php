@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Product extends Model
 {
@@ -25,13 +27,35 @@ class Product extends Model
         'is_featured'
     ];
 
-    public function category():BelongsTo
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
-    public function brand():BelongsTo
+    public function brand(): BelongsTo
     {
         return $this->belongsTo(Brand::class);
+    }
+
+    public function images(): HasMany
+    {
+        return $this->hasMany(ProductImage::class);
+    }
+
+    public function featuredImage(): HasOne
+    {
+        return $this->hasOne(ProductImage::class)
+            ->where('is_featured', true);
+    }
+
+    public function galleryImages(): HasMany
+    {
+        return $this->hasMany(ProductImage::class)
+            ->where('is_featured', false);
+    }
+
+    public function unit():BelongsTo
+    {
+        return $this->belongsTo(Unit::class);
     }
 }
