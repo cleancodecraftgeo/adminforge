@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('attributes', function (Blueprint $table) {
-            $table->ulid('id')->primary(); 
+        Schema::create('units', function (Blueprint $table) {
+            $table->ulid('id')->primary();
             $table->string('name');
-            $table->string('slug')->unique();
+            $table->string('symbol',10)->unique();
             $table->boolean('is_active')->default(true);
-            $table->unsignedInteger('sort_order')->default(0);
             $table->timestamps();
         });
     }
@@ -26,6 +25,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('attributes');
+        Schema::dropIfExists('units');
+        
     }
 };

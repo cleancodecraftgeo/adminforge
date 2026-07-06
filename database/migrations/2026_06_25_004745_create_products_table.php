@@ -23,6 +23,11 @@ return new class extends Migration
             ->constrained()
             ->nullOnDelete();
 
+            $table->foreignUlid('unit_id')
+            ->nullable()
+            ->constrained('units')
+            ->nullOnDelete();
+
             $table->string('name');
 
             $table->string('slug')->unique();
@@ -30,7 +35,7 @@ return new class extends Migration
             $table->decimal('price',10,2);
 
             $table->string('sku')->unique();
-            
+
             $table->boolean('is_active')->default(true);
             $table->boolean('is_featured')->default(true);
 

@@ -50,16 +50,16 @@ class ProductForm
                                             ->numeric()
                                             ->prefix('$'),
                                         FileUpload::make('feautured_image')
-                                        ->image()
-                                        ->directory('products')
-                                        ->disk('public'),
+                                            ->image()
+                                            ->directory('products')
+                                            ->disk('public'),
 
                                         TextInput::make('sku')
                                             ->default(fn() => 'PRD-' . strtoupper(Str::random(6)))
                                             ->unique(ignoreRecord: true),
 
 
-                                            MarkdownEditor::make('content'),
+                                        MarkdownEditor::make('content'),
                                         RichEditor::make('description')
                                             ->columnSpanFull(),
 
@@ -91,6 +91,12 @@ class ProductForm
                                             ->searchable()
                                             ->preload()
                                             ->nullable(),
+
+                                        Select::make('unit_id')
+                                            ->relationship('unit', 'name')
+                                            ->searchable()
+                                            ->preload()
+                                            ->placeholder('Select Unit')
                                     ]),
 
                                 Section::make('Status')
@@ -123,6 +129,10 @@ class ProductForm
                                             ->nullable(),
                                     ])
                                     ->columns(2),
+                                Select::make('unit_id')
+                                    ->relationship('unit', 'name')
+                                    ->searchable()
+                                    ->preload()
                             ]),
                     ])
                     ->persistTabInQueryString(),
