@@ -6,7 +6,7 @@ use App\Contracts\InventoryServiceInterface;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use Illuminate\Support\Facades\DB;
-
+use App\Events\ProductCreated;
 class ProductService
 {
     //    public function create(array $data): Product
@@ -45,6 +45,8 @@ class ProductService
             $product = $this->createProduct($data);
 
             $this->createDefaultVariant($product);
+
+            ProductCreated::dispatch($product);
 
             return $product;
         });
