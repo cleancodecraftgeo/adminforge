@@ -29,4 +29,9 @@ class AttributeValue extends Model
     {
         return $this->belongsToMany(ProductVariant::class,'product_variant_values');
     }
+
+    public function getFullNameAttribute(): string
+{
+    return "{$this->attribute->name} → {$this->value}";
+}
 }

@@ -22,11 +22,18 @@ class ProductsTable
                 TextColumn::make('category.name')
                     ->searchable(),
                 TextColumn::make('brand.name')
-                    ->searchable(),
+                    ->searchable()
+                    ->weight('bold')
+                    ,
                 TextColumn::make('name')
                     ->searchable(),
                 TextColumn::make('slug')
                     ->searchable(),
+                // TextColumn::make('total_stock')
+                //     ->numeric(),
+                 TextColumn::make('variants_sum_stock')
+                    ->numeric()
+                    ->alignCenter(),
                 TextColumn::make('price')
                     ->money()
                     ->sortable(),

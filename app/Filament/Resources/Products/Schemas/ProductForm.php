@@ -35,7 +35,8 @@ class ProductForm
                                             ->live(onBlur: true)
                                             ->afterStateUpdated(function (Set $set, ?string $state) {
                                                 $set('slug', Str::slug($state));
-                                            })->columnSpan([
+                                            })
+                                            ->columnSpan([
                                                 'default' => 1,
                                                 'md' => 2,
                                                 'xl' => 3,
@@ -55,7 +56,7 @@ class ProductForm
                                             ->disk('public'),
 
                                         TextInput::make('sku')
-                                            ->default(fn() => 'PRD-' . strtoupper(Str::random(6)))
+                                            // ->default(fn() => 'PRD-' . strtoupper(Str::random(6)))
                                             ->unique(ignoreRecord: true),
 
 

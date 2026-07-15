@@ -41,8 +41,16 @@ class VariantsRelationManager extends RelationManager
                     ->prefix('$'),
                 Toggle::make('is_default')
                     ->required(),
+
                 MultiSelect::make('attributeValues')
-                    ->relationship('attributeValues', 'value'),
+                    ->relationship(name:'attributeValues',
+                    titleAttribute:'value',
+                    modifyQueryUsing: function ($query){
+
+                     $product = $this->getOwnerRecord();
+                     $attributeIds = $product->attributes()->pluck('attributes.id');
+                     $query->whereIn('attribute_id', $attributeIds);
+                    }) ->preload(),
             ]);
     }
 
