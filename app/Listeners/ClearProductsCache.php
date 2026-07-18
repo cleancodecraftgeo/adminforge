@@ -5,8 +5,9 @@ namespace App\Listeners;
 use App\Events\ProductCreated;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Cache;
 
-class LogProductCreated implements ShouldQueue
+class ClearProductsCache
 {
     /**
      * Create the event listener.
@@ -21,7 +22,6 @@ class LogProductCreated implements ShouldQueue
      */
     public function handle(ProductCreated $event): void
     {
-       logger('ProductCreated Event worked');
-       logger('Product: ' . $event->product->name);
+        Cache::forget('products');
     }
 }

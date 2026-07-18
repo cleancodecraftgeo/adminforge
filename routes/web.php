@@ -1,6 +1,11 @@
 <?php
 
+use App\Models\Product;
+use App\Models\User;
+use App\Notifications\ProductCreatedNotification;
 use App\Services\ProductService;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -21,4 +26,50 @@ Route::get('/testd', function () {
 
 Route::get('/di-test',function(ProductService $productService){
     dd($productService);
+});
+
+
+
+Route::get('/notification-test',function(){
+        $user = User::first();
+
+        $product = Product::first();
+
+        $user->notify(
+            new ProductCreatedNotification($product)
+        );
+
+        return 'Notification sent!';
+});
+
+
+Route::get('/mail-test', function () {
+
+    Mail::raw('Hello Elnur! This is your first Laravel email 🚀', function ($message) {
+
+        $message->to('elnurtaken@gmail.com')
+                ->subject('Laravel Mail Test');
+
+    });
+
+    return 'Mail sent!';
+});
+
+
+
+
+Route::get('/cache-test', function () {
+
+
+
+    $products = Cache::remember(
+        'products',
+        2600,
+        function () {
+            logger('Database soruşuldu!');
+            return Product::all()->toArray();
+        }
+    );
+
+    return response()->json($products);
 });
