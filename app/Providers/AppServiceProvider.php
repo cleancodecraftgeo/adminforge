@@ -6,6 +6,7 @@ use App\Contracts\InventoryServiceInterface;
 use App\Models\Product;
 use App\Observers\ProductObserver;
 use App\Policies\ProductPolicy;
+use App\Services\CounterService;
 use App\Services\InventoryService;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
@@ -25,12 +26,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Product::observe(ProductObserver::class);
-        Gate::policy(Product::class, ProductPolicy::class);
+        // Product::observe(ProductObserver::class);
+        // Gate::policy(Product::class, ProductPolicy::class);
 
-        $this->app->bind(
-            InventoryServiceInterface::class,
-                InventoryService::class
-        );
+        // $this->app->bind(
+        //     InventoryServiceInterface::class,
+        //         InventoryService::class
+        // );
+
+        // $this->app->bind(
+        //     CounterService::class,
+        //     CounterService::class
+        // );
     }
 }
