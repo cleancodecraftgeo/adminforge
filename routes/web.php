@@ -3,7 +3,7 @@
 use App\Models\Product;
 use App\Models\User;
 use App\Notifications\ProductCreatedNotification;
-
+use App\Services\CounterService;
 use App\Services\ProductService;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
@@ -75,7 +75,12 @@ Route::get('/cache-test', function () {
     return response()->json($products);
 });
 
-// Route::get('/counter',function (CounterService $a,CounterService $b){
-//     dd($a===$b);
+Route::get('counter', function (CounterService $a) {
+    $b = app(CounterService::class);
+    $c = app(CounterService::class);
+dd($a === $b && $b === $c);
+});
 
-// });
+Route::get('/yoxla', function():string{
+    return 'worked';
+});

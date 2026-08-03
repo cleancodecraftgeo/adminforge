@@ -3,10 +3,13 @@
 namespace App\Services;
 
 use App\Contracts\InventoryServiceInterface;
+use App\Events\ProductCreated;
 use App\Models\Product;
 use App\Models\ProductVariant;
+use App\Repositories\Contracts\BaseRepositoryInterface;
+use App\Repositories\Contracts\ProductRepositoryInterface;
 use Illuminate\Support\Facades\DB;
-use App\Events\ProductCreated;
+
 class ProductService
 {
     //    public function create(array $data): Product
@@ -30,7 +33,11 @@ class ProductService
     //     });
     // }
 
-    public function __construct(private InventoryServiceInterface  $inventoryService)
+    public function __construct(
+        private ProductRepositoryInterface $productRepo,
+        private InventoryServiceInterface  $inventoryService,
+
+        )
     {
 
 
@@ -40,7 +47,8 @@ class ProductService
 
     public function create(array $data): Product
     {
-        return DB::transaction(function () use ($data) {
+        return DB::transaction(function () use ($data)
+        {
 
             $product = $this->createProduct($data);
 
@@ -56,8 +64,10 @@ class ProductService
 
     private function createProduct(array $data): Product
     {
-        return Product::create($data);
+        return $this->productRepo->create($data);
     }
+
+
 
     private function createDefaultVariant(Product $product): void
     {
@@ -71,5 +81,10 @@ class ProductService
             'is_active' => true,
             'is_featured' => true,
         ]);
+    }
+
+    public function index()
+    {
+        $this->productRepo->paginate();
     }
 }
