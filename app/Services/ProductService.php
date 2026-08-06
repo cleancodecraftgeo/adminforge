@@ -9,6 +9,7 @@ use App\Models\ProductVariant;
 use App\Repositories\Contracts\BaseRepositoryInterface;
 use App\Repositories\Contracts\ProductRepositoryInterface;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class ProductService
 {
@@ -37,8 +38,7 @@ class ProductService
         private ProductRepositoryInterface $productRepo,
         private InventoryServiceInterface  $inventoryService,
 
-        )
-    {
+    ) {
 
 
         logger('🛒 ProductService yaradıldı');
@@ -47,8 +47,8 @@ class ProductService
 
     public function create(array $data): Product
     {
-        return DB::transaction(function () use ($data)
-        {
+        return DB::transaction(function () use ($data) {
+
 
             $product = $this->createProduct($data);
 
@@ -62,8 +62,23 @@ class ProductService
 
 
 
+
+
+    private function generateSku(): string
+    {
+        do {
+            $sku = 'PRD-' . strtoupper(Str::random(6));
+        } while (Product::where('sku', $sku)->exists());
+
+        return $sku;
+    }
+
+    
+
+
     private function createProduct(array $data): Product
     {
+        $data['sku'] = $this->generateSku();
         return $this->productRepo->create($data);
     }
 
@@ -83,8 +98,8 @@ class ProductService
         ]);
     }
 
-    public function index()
+    public function index(): \Illuminate\Pagination\LengthAwarePaginator
     {
-        $this->productRepo->paginate();
+        return $this->productRepo->paginate();
     }
 }
