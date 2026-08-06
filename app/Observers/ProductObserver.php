@@ -14,15 +14,6 @@ class ProductObserver
     {
         logger('creating');
 
-        if (blank($product->sku)) {
-
-
-            do {
-                $sku = 'PRD-' . strtoupper(Str::random(6));
-            } while (Product::where('sku', $sku)->exists());
-
-            $product->sku = $sku;
-        }
 
 
 
