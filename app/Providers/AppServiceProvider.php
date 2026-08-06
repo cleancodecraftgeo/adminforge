@@ -7,7 +7,7 @@ use App\Models\Product;
 use App\Observers\ProductObserver;
 use App\Policies\ProductPolicy;
 use App\Repositories\Contracts\ProductRepositoryInterface;
-use App\Repositories\ProductRepository;
+use App\Repositories\Product\ProductRepository;
 use App\Services\CounterService;
 use App\Services\InventoryService;
 use Illuminate\Support\Facades\Gate;
@@ -20,7 +20,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(
+            ProductRepositoryInterface::class,
+            ProductRepository::class
+         );
     }
 
     /**
@@ -41,9 +44,6 @@ class AppServiceProvider extends ServiceProvider
              CounterService::class
          );
 
-         $this->app->bind(
-            ProductRepositoryInterface::class,
-            ProductRepository::class
-         );
+
     }
 }
