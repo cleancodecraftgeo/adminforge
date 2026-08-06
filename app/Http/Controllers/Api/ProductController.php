@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreProductRequest;
 use App\Http\Resources\ProductResource;
+use App\Models\Product;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
 
@@ -25,14 +27,21 @@ class ProductController extends Controller
         return ProductResource::collection(
             $this->productService->index()
         );
+
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
-        //
+        $product = $this->productService->create(
+            $request->validated()
+        );
+
+        return (new ProductResource($product))
+        ->response()
+        ->setStatusCode(201);
     }
 
     /**
@@ -41,6 +50,7 @@ class ProductController extends Controller
     public function show(string $id)
     {
         //
+        return 'cavab '.$id;
     }
 
     /**
