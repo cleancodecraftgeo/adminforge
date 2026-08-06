@@ -7,6 +7,6 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 interface ProductRepositoryInterface extends BaseRepositoryInterface
 {
- 
+    public function slugExists(string $slug): bool;
 
 }

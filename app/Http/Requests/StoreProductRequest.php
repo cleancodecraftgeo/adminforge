@@ -34,7 +34,7 @@ class StoreProductRequest extends FormRequest
             ],
 
             'unit_id'=>[
-                'required',
+                'nullable',
                 'exists:units,id'
             ],
 

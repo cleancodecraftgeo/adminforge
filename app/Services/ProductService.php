@@ -73,12 +73,28 @@ class ProductService
         return $sku;
     }
 
-    
+    private function generateSlug(string $name): string
+    {
+        $slug =  Str::slug($name);
+        $original = $slug;
+        $count = 2;
+
+        while ($this->productRepo->slugExists($slug))
+            {
+                $slug = $original . '-' . $count;
+                $count++;
+            }
+            return $slug;
+    }
+
+
 
 
     private function createProduct(array $data): Product
     {
         $data['sku'] = $this->generateSku();
+        $data['slug'] = $this->generateSlug($data['name']);
+
         return $this->productRepo->create($data);
     }
 

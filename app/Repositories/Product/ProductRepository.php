@@ -8,6 +8,7 @@ use App\Repositories\Contracts\ProductRepositoryInterface;
 use App\Repositories\Product\Criteria\CategoryCriteria;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Override;
 
 class ProductRepository extends BaseRepository implements ProductRepositoryInterface
 {
@@ -17,6 +18,11 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
         parent::__construct($product);
     }
 
+
+    public function slugExists(string $slug): bool
+    {
+        return $this->model->where('slug', $slug)->exists();
+    }
 
 
 }
