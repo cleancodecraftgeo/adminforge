@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ProductController;
 use App\Models\Product;
 use App\Models\User;
 use App\Notifications\ProductCreatedNotification;
@@ -84,3 +85,6 @@ dd($a === $b && $b === $c);
 Route::get('/yoxla', function():string{
     return 'worked';
 });
+
+
+Route::apiResource('products',ProductController::class);
