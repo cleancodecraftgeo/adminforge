@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Product;
 
 use App\Models\Product;
+use App\Repositories\BaseRepository;
 use App\Repositories\Contracts\ProductRepositoryInterface;
 use App\Repositories\Product\Criteria\CategoryCriteria;
 use Illuminate\Database\Eloquent\Collection;
