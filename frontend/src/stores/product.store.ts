@@ -1,6 +1,7 @@
 import { ProductService } from "@/services/product.service";
+import type { Product } from "@/types/product";
 import { defineStore } from "pinia";
-import type { Product, PaginationMeta } from "@/types/product"
+
 
 
 
@@ -14,8 +15,7 @@ export const useProductStore = defineStore("products",{
       meta: null,
       links: null,
       loading:false
-      // meta: null as PaginationMeta| null,
-      // loading: false,
+
   }),
 
   actions: {
@@ -26,7 +26,6 @@ export const useProductStore = defineStore("products",{
           this.products = response.data
           this.meta = response.meta
           this.loading= true
-          return console.log(response,"productStore-dan gelen datalar");
         }
   }
 });
